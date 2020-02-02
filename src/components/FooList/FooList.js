@@ -31,6 +31,7 @@ const FooList = ({ fooList, createFoo, toggleCompleteFoo }) => {
               <li key={item.id} className="list-group-item">
                 {item.id} - {item.colour} - {item.speed} - {item.size}
                 <button onClick={() => toggleCompleteFoo(item.id)}>Mark as complete</button>
+                <span>{item.errorMessage}</span>
               </li>
             ))}
           </ul>

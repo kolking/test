@@ -3,6 +3,7 @@ import moment from 'moment';
 import {
   getSendableFooIds,
   updateFooSendable,
+  toggleCompleteFoo,
   getFooById,
   setError,
   UPDATE_FOO,
@@ -20,7 +21,9 @@ export function* handleCompletedFoos() {
     if (foo.completedAt) {
       if (moment(foo.completedAt).diff(moment(foo.createdAt), 'seconds') > 20) {
         yield put(updateFooSendable(id, true));
+        yield put(setError(id, null));
       } else {
+        yield put(toggleCompleteFoo(id));
         yield put(setError(id, "You can't complete this so soon!"));
       }
     }
