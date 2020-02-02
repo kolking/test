@@ -47,14 +47,18 @@ export const submitFoo = (id) => ({
   },
 })
 
-export const markFooAsSubmitted = (id, sentAt) => ({
-  type: UPDATE_FOO,
-  payload: {
-    id,
-    sentAt,
-  },
-});
+export const markFooAsSubmitted = (id) => {
+  const submittedAt = moment().utc().format();
 
+  return {
+    type: UPDATE_FOO,
+    payload: {
+      id,
+      sendable: false,
+      submittedAt,
+    },
+  };
+};
 
 export const setError = (id, errorMessage) => ({
   type: UPDATE_FOO,

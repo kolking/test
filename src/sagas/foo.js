@@ -4,6 +4,8 @@ import {
   getSendableFooIds,
   updateFooSendable,
   toggleCompleteFoo,
+  markFooAsSubmitted,
+  submitFoo,
   getFooById,
   setError,
   UPDATE_FOO,
@@ -37,13 +39,13 @@ export function* submitSendableFoos() {
     const sendableIds = yield select(getSendableFooIds);
 
     for (let i = 0; i < sendableIds.length; i++) {
-      yield put(submitFoo, sendableIds[i]);
+      yield put(submitFoo(sendableIds[i]));
       yield take(SUBMISSION_COMPLETE);
     }
   }
 }
 
-export function* submitFoo() {
+export function* handleSubmitFoo() {
   while (true) {
     const { payload: { id }} = yield take(SUBMIT_FOO);
 
@@ -51,13 +53,14 @@ export function* submitFoo() {
     // and ensure that the response indicated it was successful
     // For this test, we can assume it was successful
 
-    yield put(SUBMISSION_COMPLETE);
+    yield put(markFooAsSubmitted(id));
+    yield put({ type: SUBMISSION_COMPLETE });
   }
 }
 
 export function* registerSagas() {
   yield all([
-    submitFoo(),
+    handleSubmitFoo(),
     submitSendableFoos(),
     handleCompletedFoos(),
   ]);
