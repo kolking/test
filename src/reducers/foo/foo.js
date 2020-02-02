@@ -50,6 +50,7 @@ export const submitFoo = (id) => ({
 export const markFooAsSubmitted = (id, sentAt) => ({
   type: UPDATE_FOO,
   payload: {
+    id,
     sentAt,
   },
 });
@@ -66,8 +67,8 @@ export const setError = (id, errorMessage) => ({
 export default function reducer(state = initialState, action) {
   switch(action.type) {
     case CREATE_FOO: {
-      const { payload } = action;
-      const { id, colour, size, speed, createdAt} = payload;
+      const { id, colour, size, speed, createdAt} = action.payload;
+
       return ({
         ...state,
         byId: {
@@ -86,15 +87,16 @@ export default function reducer(state = initialState, action) {
         allIds: Array.from(new Set([...state.allIds, id]))
       });
     }
-    case TOGGLE_COMPLETE_FOO: {
-      const { payload } = action;
-      const { id } = payload;
 
+    case TOGGLE_COMPLETE_FOO: {
+      const { id } = action.payload;
       const foo = state.byId[id];
       const completedAt = moment().utc().format();
 
       return {
+        ...state,
         byId: {
+          ...state.byId,
           [id]: {
             ...foo,
             completedAt: foo.completedAt ? null : completedAt,
@@ -105,11 +107,14 @@ export default function reducer(state = initialState, action) {
 
     case SET_FOO_SENDABLE: {
       const { id, sendable } = action.payload;
+      const foo = state.byId[id];
+
       return {
         ...state,
         byId: {
-          ...state,
+          ...state.byId,
           [id]: {
+            ...foo,
             sendable,
           },
         },
@@ -117,17 +122,22 @@ export default function reducer(state = initialState, action) {
     }
 
     case UPDATE_FOO: {
-      const { id, payload } = action;
+      const { payload } = action;
+      const { id } = payload;
+      const foo = state.byId[id];
 
       return {
+        ...state,
         byId: {
           ...state.byId,
           [id]: {
+            ...foo,
             ...payload,
           },
         },
       };
     }
+
     default: return state;
   }
 }
@@ -138,5 +148,5 @@ export const getAllFoos = (state) => state.foo.allIds.map((id) => (
 ));
 export const getFooById = (state, id) => state.foo.byId[id];
 export const getSendableFooIds = (state) => state.foo.allIds.filter((id) => (
-  state.byId[id].sendable
+  state.foo.byId[id].sendable
 ));
