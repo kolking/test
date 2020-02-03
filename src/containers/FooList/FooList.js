@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { getAllFoos, toggleCompleteFoo, createFoo } from '../../reducers/foo/foo';
+import { getAllFoos, createFoo, updateFooCompleted } from '../../reducers/foo/foo';
 import FooList from '../../components/FooList';
 
 const mapStateToProps = (state) => ({
@@ -8,7 +8,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   createFoo,
-  toggleCompleteFoo,
+  updateFooCompleted,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FooList);

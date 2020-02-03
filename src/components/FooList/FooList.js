@@ -1,7 +1,7 @@
 import React from 'react';
 import { randomIndex, formatTime, formatDuration } from '../../helpers';
 
-const FooList = ({ fooList, createFoo, toggleCompleteFoo }) => {
+const FooList = ({ fooList, createFoo, updateFooCompleted }) => {
   const newFoo = () => {
     const speed = ['slow', 'fast', 'very fast'];
     const colour = ['blue', 'white', 'black', 'blue'];
@@ -39,7 +39,9 @@ const FooList = ({ fooList, createFoo, toggleCompleteFoo }) => {
                     {`Completed in ${formatDuration(item.createdAt, item.submittedAt)}`}
                   </div>
                 ) : (
-                  <button type="button" onClick={() => toggleCompleteFoo(item.id)}>Complete</button>
+                  <button type="button" onClick={() => updateFooCompleted(item.id)}>
+                    Complete
+                  </button>
                 )}
                 {item.errorMessage && (
                   <div className="error" data-message={item.errorMessage} />

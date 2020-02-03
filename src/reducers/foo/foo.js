@@ -1,10 +1,12 @@
 import moment from 'moment';
 
-export const SET_FOO_SENDABLE = 'foo/SET_SENDABLE';
 export const UPDATE_FOO = 'foo/UPDATE';
 export const CREATE_FOO = 'foo/CREATE';
 export const SUBMIT_FOO = 'foo/SUBMIT';
-export const TOGGLE_COMPLETE_FOO = 'foo/TOGGLE_COMPLETE';
+export const SET_FOO_SENDABLE = 'foo/SET_SENDABLE';
+export const SET_FOO_COMPLETED = 'foo/SET_FOO_COMPLETED';
+
+const momentNow = () => moment().utc().format();
 
 const initialState = {
   byId: {},
@@ -12,7 +14,8 @@ const initialState = {
 };
 
 export const createFoo = (id, colour, size, speed) => {
-  const createdAt = moment().utc().format();
+  const createdAt = momentNow();
+
   return {
     type: CREATE_FOO,
     payload: {
@@ -25,30 +28,29 @@ export const createFoo = (id, colour, size, speed) => {
   };
 };
 
-export const toggleCompleteFoo = (id) => ({
-  type: TOGGLE_COMPLETE_FOO,
-  payload: {
-    id,
-  },
-});
+export const updateFooCompleted = (id) => {
+  const completedAt = momentNow();
+
+  return {
+    type: SET_FOO_COMPLETED,
+    payload: {
+      id,
+      completedAt,
+    },
+  };
+};
 
 export const updateFooSendable = (id, sendable) => ({
   type: SET_FOO_SENDABLE,
   payload: {
     id,
     sendable,
+    errorMessage: undefined,
   },
 });
 
-export const submitFoo = (id) => ({
-  type: SUBMIT_FOO,
-  payload: {
-    id,
-  },
-})
-
-export const markFooAsSubmitted = (id) => {
-  const submittedAt = moment().utc().format();
+export const updateFooSubmitted = (id) => {
+  const submittedAt = momentNow();
 
   return {
     type: UPDATE_FOO,
@@ -59,6 +61,13 @@ export const markFooAsSubmitted = (id) => {
     },
   };
 };
+
+export const submitFoo = (id) => ({
+  type: SUBMIT_FOO,
+  payload: {
+    id,
+  },
+})
 
 export const setError = (id, errorMessage) => ({
   type: UPDATE_FOO,
@@ -92,43 +101,16 @@ export default function reducer(state = initialState, action) {
       });
     }
 
-    case TOGGLE_COMPLETE_FOO: {
-      const { id } = action.payload;
-      const foo = state.byId[id];
-      const completedAt = moment().utc().format();
-
-      return {
-        ...state,
-        byId: {
-          ...state.byId,
-          [id]: {
-            ...foo,
-            completedAt: foo.completedAt ? null : completedAt,
-          },
-        },
-      };
-    }
-
-    case SET_FOO_SENDABLE: {
-      const { id, sendable } = action.payload;
-      const foo = state.byId[id];
-
-      return {
-        ...state,
-        byId: {
-          ...state.byId,
-          [id]: {
-            ...foo,
-            sendable,
-          },
-        },
-      };
-    }
-
+    case SET_FOO_SENDABLE:
+    case SET_FOO_COMPLETED:
     case UPDATE_FOO: {
       const { payload } = action;
       const { id } = payload;
       const foo = state.byId[id];
+
+      if (!foo) {
+        return state;
+      }
 
       return {
         ...state,

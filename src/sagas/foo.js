@@ -3,13 +3,12 @@ import moment from 'moment';
 import {
   getSendableFooIds,
   updateFooSendable,
-  toggleCompleteFoo,
-  markFooAsSubmitted,
+  updateFooSubmitted,
   submitFoo,
   getFooById,
   setError,
-  UPDATE_FOO,
-  TOGGLE_COMPLETE_FOO,
+  SET_FOO_COMPLETED,
+  SET_FOO_SENDABLE,
   SUBMIT_FOO,
 } from '../reducers/foo/foo';
 
@@ -17,15 +16,13 @@ export const SUBMISSION_COMPLETE = 'submission/COMPLETE';
 
 export function* handleCompletedFoos() {
   while (true) {
-    const { payload: { id }} = yield take(TOGGLE_COMPLETE_FOO);
+    const { payload: { id }} = yield take(SET_FOO_COMPLETED);
     const foo = yield select(getFooById, id);
-    
-    if (foo.completedAt) {
+
+    if (foo && foo.completedAt) {
       if (moment(foo.completedAt).diff(moment(foo.createdAt), 'seconds') > 20) {
         yield put(updateFooSendable(id, true));
-        yield put(setError(id, null));
       } else {
-        yield put(toggleCompleteFoo(id));
         yield put(setError(id, "You can't complete this so soon!"));
       }
     }
@@ -34,7 +31,7 @@ export function* handleCompletedFoos() {
 
 export function* submitSendableFoos() {
   while (true) {
-    yield take(UPDATE_FOO);
+    yield take(SET_FOO_SENDABLE);
 
     const sendableIds = yield select(getSendableFooIds);
 
@@ -53,7 +50,7 @@ export function* handleSubmitFoo() {
     // and ensure that the response indicated it was successful
     // For this test, we can assume it was successful
 
-    yield put(markFooAsSubmitted(id));
+    yield put(updateFooSubmitted(id));
     yield put({ type: SUBMISSION_COMPLETE });
   }
 }

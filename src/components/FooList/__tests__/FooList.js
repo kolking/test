@@ -69,12 +69,12 @@ it('should call createFoo', () => {
   expect(createFoo).toBeCalled();
 });
 
-it('should call toggleCompleteFoo', () => {
-  const toggleCompleteFoo = jest.fn();
-  const tree = createRenderer({ fooList, toggleCompleteFoo });
+it('should call updateFooCompleted', () => {
+  const updateFooCompleted = jest.fn();
+  const tree = createRenderer({ fooList, updateFooCompleted });
   const button = tree.root.findAllByType('button')[1];
 
   button.props.onClick();
 
-  expect(toggleCompleteFoo).toBeCalled();
+  expect(updateFooCompleted).toBeCalled();
 });
