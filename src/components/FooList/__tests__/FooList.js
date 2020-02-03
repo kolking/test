@@ -41,6 +41,24 @@ it('should render list of foos', () => {
   expect(createRenderer({ fooList })).toMatchSnapshot();
 });
 
+it('should render item with error', () => {
+  const item = {
+    ...fooList[0],
+    errorMessage: 'Unexpected error'
+  }
+
+  expect(createRenderer({ fooList: [item] })).toMatchSnapshot();
+});
+
+it('should render completed item', () => {
+  const item = {
+    ...fooList[0],
+    submittedAt: '2020-01-01T01:02:03Z'
+  }
+
+  expect(createRenderer({ fooList: [item] })).toMatchSnapshot();
+});
+
 it('should call createFoo', () => {
   const createFoo = jest.fn();
   const tree = createRenderer({ createFoo });

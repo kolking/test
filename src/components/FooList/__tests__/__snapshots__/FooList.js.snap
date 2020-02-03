@@ -1,5 +1,52 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`should render completed item 1`] = `
+<section
+  className="container"
+>
+  <hgroup
+    className="container_header"
+  >
+    <h1>
+      List of foos
+    </h1>
+    <button
+      onClick={[Function]}
+      type="button"
+    >
+      Create New
+    </button>
+  </hgroup>
+  <div
+    className="container_content"
+  >
+    <ul
+      className="foo-list"
+    >
+      <li
+        className="foo-list_item"
+      >
+        <time
+          className="foo-list_item_time"
+        >
+          5:01:01 AM
+        </time>
+        <div
+          className="foo-list_item_description"
+        >
+          [uno] red - fast - big
+        </div>
+        <div
+          className="foo-list_item_completed"
+        >
+          Completed in 1m, 2s
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+`;
+
 exports[`should render empty list 1`] = `
 <section
   className="container"
@@ -25,6 +72,58 @@ exports[`should render empty list 1`] = `
     >
       There are no foos
     </p>
+  </div>
+</section>
+`;
+
+exports[`should render item with error 1`] = `
+<section
+  className="container"
+>
+  <hgroup
+    className="container_header"
+  >
+    <h1>
+      List of foos
+    </h1>
+    <button
+      onClick={[Function]}
+      type="button"
+    >
+      Create New
+    </button>
+  </hgroup>
+  <div
+    className="container_content"
+  >
+    <ul
+      className="foo-list"
+    >
+      <li
+        className="foo-list_item"
+      >
+        <time
+          className="foo-list_item_time"
+        >
+          5:01:01 AM
+        </time>
+        <div
+          className="foo-list_item_description"
+        >
+          [uno] red - fast - big
+        </div>
+        <button
+          onClick={[Function]}
+          type="button"
+        >
+          Complete
+        </button>
+        <div
+          className="error"
+          data-message="Unexpected error"
+        />
+      </li>
+    </ul>
   </div>
 </section>
 `;

@@ -36,7 +36,7 @@ const FooList = ({ fooList, createFoo, toggleCompleteFoo }) => {
                 </div>
                 {item.submittedAt ? (
                   <div className="foo-list_item_completed">
-                    Completed in {formatDuration(item.createdAt, item.submittedAt)}
+                    {`Completed in ${formatDuration(item.createdAt, item.submittedAt)}`}
                   </div>
                 ) : (
                   <button type="button" onClick={() => toggleCompleteFoo(item.id)}>Complete</button>
