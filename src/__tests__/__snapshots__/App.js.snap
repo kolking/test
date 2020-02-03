@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render normally 1`] = `
+<section
+  className="container"
+>
+  <hgroup
+    className="container_header"
+  >
+    <h1>
+      List of foos
+    </h1>
+    <button
+      onClick={[Function]}
+      type="button"
+    >
+      Create New
+    </button>
+  </hgroup>
+  <div
+    className="container_content"
+  >
+    <p
+      className="container_empty"
+    >
+      There are no foos
+    </p>
+  </div>
+</section>
+`;
