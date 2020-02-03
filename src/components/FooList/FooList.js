@@ -1,17 +1,5 @@
 import React from 'react';
-import moment from 'moment';
-
-const randomIndex = (arrayLength) => Math.floor(Math.random() * arrayLength);
-
-const formatTime = (datetime) => moment(datetime).format('LTS');
-
-const formatDuration = (begin, end) => {
-  const duration = moment.duration(moment(end).diff(moment(begin)));
-  const minutes = duration.minutes();
-  const seconds = duration.seconds();
-
-  return minutes > 0 ? `${minutes}m, ${seconds}s` : `${seconds}s`;
-}
+import { randomIndex, formatTime, formatDuration } from '../../helpers';
 
 const FooList = ({ fooList, createFoo, toggleCompleteFoo }) => {
   const newFoo = () => {
