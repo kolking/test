@@ -96,28 +96,29 @@ button:active {
 }
 
 .error {
+  display: flex;
   flex-shrink: 0;
   margin-left: 1rem;
   position: relative;
+  align-items: center;
 }
 
 .error::before {
-  content: '!';
-  color: #fff;
+  width: 2rem;
+  height: 2rem;
+  content: '';
   cursor: help;
-  font-size: 1.4rem;
-  min-width: 1.5em;
-  line-height: 1.5;
+  color: #fff;
+  line-height: 2rem;
   border-radius: 50%;
-  font-weight: bold;
-  text-align: center;
   display: inline-block;
   background-color: #F20;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath d='M6,6 L14,14 M14,6 L6,14' fill='none' stroke='%23FFF' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
 }
 
 .error:hover::after {
-  top: 100%;
-  right: -0.5rem;
+  top: calc(100% + 3px);
+  right: -3px;
   color: #fff;
   line-height: 1.2;
   font-size: 1.2rem;
