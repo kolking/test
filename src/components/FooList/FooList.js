@@ -1,8 +1,17 @@
 import React from 'react';
+import moment from 'moment';
 
-const randomIndex = (arrayLength) => (
-  Math.floor(Math.random()*arrayLength)
-);
+const randomIndex = (arrayLength) => Math.floor(Math.random() * arrayLength);
+
+const formatTime = (datetime) => moment(datetime).format('LTS');
+
+const formatDuration = (begin, end) => {
+  const duration = moment.duration(moment(end).diff(moment(begin)));
+  const minutes = duration.minutes();
+  const seconds = duration.seconds();
+
+  return minutes > 0 ? `${minutes}m, ${seconds}s` : `${seconds}s`;
+}
 
 const FooList = ({ fooList, createFoo, toggleCompleteFoo }) => {
   const newFoo = () => {
@@ -16,38 +25,45 @@ const FooList = ({ fooList, createFoo, toggleCompleteFoo }) => {
       size: size[randomIndex(size.length)],
       id: Math.random().toString(36).substring(7)
     }
-    console.log('creating a foo');
+
     createFoo(fooItem.id, fooItem.colour, fooItem.size, fooItem.speed);
   }
 
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col">
+    <section className="container">
+      <hgroup className="container_header">
         <h1>List of foos</h1>
-        {fooList.length > 0 && (
-          <ul className="list-group">
+        <button type="button" onClick={newFoo}>Create New</button>
+      </hgroup>
+      <div className="container_content">
+        {fooList && fooList.length > 0 ? (
+          <ul className="foo-list">
             {fooList.map((item) => (
-              <li key={item.id} className="list-group-item">
-                {item.id} - {item.colour} - {item.speed} - {item.size}
-                <button onClick={() => toggleCompleteFoo(item.id)}>Mark as complete</button>
-                <span>{item.errorMessage}</span>
+              <li key={item.id} className="foo-list_item">
+                <time className="foo-list_item_time">
+                  {formatTime(item.createdAt)}
+                </time>
+                <div className="foo-list_item_description">
+                  {`[${item.id}] ${item.colour} - ${item.speed} - ${item.size}`}
+                </div>
+                {item.submittedAt ? (
+                  <div className="foo-list_item_completed">
+                    Completed in {formatDuration(item.createdAt, item.submittedAt)}
+                  </div>
+                ) : (
+                  <button type="button" onClick={() => toggleCompleteFoo(item.id)}>Complete</button>
+                )}
+                {item.errorMessage && (
+                  <div className="error" data-message={item.errorMessage} />
+                )}
               </li>
             ))}
           </ul>
+        ) : (
+          <p className="container_empty">There are no foos</p>
         )}
-        {!fooList.length && (
-          <p>There are no foos</p>
-        )}
-        </div>
       </div>
-      <div className="row">
-        <div className="col">
-          <h2>New foo?</h2>
-          <button onClick={newFoo}>Create foo</button>
-        </div>
-      </div>
-    </div>
+    </section>
   )
 }
 
