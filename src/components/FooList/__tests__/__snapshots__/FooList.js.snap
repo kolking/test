@@ -1,0 +1,118 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render empty list 1`] = `
+<section
+  className="container"
+>
+  <hgroup
+    className="container_header"
+  >
+    <h1>
+      List of foos
+    </h1>
+    <button
+      onClick={[Function]}
+      type="button"
+    >
+      Create New
+    </button>
+  </hgroup>
+  <div
+    className="container_content"
+  >
+    <p
+      className="container_empty"
+    >
+      There are no foos
+    </p>
+  </div>
+</section>
+`;
+
+exports[`should render list of foos 1`] = `
+<section
+  className="container"
+>
+  <hgroup
+    className="container_header"
+  >
+    <h1>
+      List of foos
+    </h1>
+    <button
+      onClick={[Function]}
+      type="button"
+    >
+      Create New
+    </button>
+  </hgroup>
+  <div
+    className="container_content"
+  >
+    <ul
+      className="foo-list"
+    >
+      <li
+        className="foo-list_item"
+      >
+        <time
+          className="foo-list_item_time"
+        >
+          5:01:01 AM
+        </time>
+        <div
+          className="foo-list_item_description"
+        >
+          [uno] red - fast - big
+        </div>
+        <button
+          onClick={[Function]}
+          type="button"
+        >
+          Complete
+        </button>
+      </li>
+      <li
+        className="foo-list_item"
+      >
+        <time
+          className="foo-list_item_time"
+        >
+          6:02:02 AM
+        </time>
+        <div
+          className="foo-list_item_description"
+        >
+          [dos] green - slow - small
+        </div>
+        <button
+          onClick={[Function]}
+          type="button"
+        >
+          Complete
+        </button>
+      </li>
+      <li
+        className="foo-list_item"
+      >
+        <time
+          className="foo-list_item_time"
+        >
+          7:03:03 AM
+        </time>
+        <div
+          className="foo-list_item_description"
+        >
+          [tres] blue - very fast - medium
+        </div>
+        <button
+          onClick={[Function]}
+          type="button"
+        >
+          Complete
+        </button>
+      </li>
+    </ul>
+  </div>
+</section>
+`;
